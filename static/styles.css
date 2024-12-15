@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#loginPopup {
+    display: none;
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#chatArea {
+    display: none;
+    width: 500px;
+    margin: 50px auto;
+}
+
+#messages {
+    height: 200px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+input[type="text"], input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+}
+.iframe-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
