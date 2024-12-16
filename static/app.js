@@ -84,7 +84,7 @@ function render_message_history() {
     }
 }
 function connectWebSocket(username,password) {
-    socket = new WebSocket(`ws://${window.location.host}/ws?token=${token}`);
+    socket = new WebSocket(`wss://${window.location.host}/ws?token=${token}`);
 
     socket.onopen = () => {
         console.log('WebSocket connection established');
