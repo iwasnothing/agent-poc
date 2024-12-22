@@ -72,15 +72,26 @@ function render_message_history() {
     combinedMessages.push(currentMessage);
     message_history = combinedMessages;
     const messages = document.getElementById('messages');
+    const chartArea = document.getElementById('chartArea');
     messages.innerHTML = '';
+    chartArea.innerHTML = '';
     for (const message of message_history) {
         const message_html_div = document.createElement('div');
         if (message.role === "user") {
             message_html_div.innerHTML = user_message_box(message.content);
-        } else {
+        } 
+        else if (message.type === "data") {
             message_html_div.innerHTML = bot_message_box(message.content);
         }
-        messages.appendChild(message_html_div);
+        else {
+            message_html_div.innerHTML = bot_message_box(message.content);
+        }
+        if (message.type === "data") {
+            chartArea.appendChild(message_html_div);
+        } else {
+            messages.appendChild(message_html_div);
+        }
+        
     }
 }
 function connectWebSocket(username,password) {

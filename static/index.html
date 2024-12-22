@@ -13,13 +13,14 @@
         <input type="password" id="password" placeholder="Password">
         <button onclick="login()">Login</button>
     </div>
-
-    <div id="chatArea" style="width: 1024px; height: 1024px;">
-        <h2>WebSocket Chat</h2>
-        <div id="messages" style="width: 1024px; height: 600px; overflow-y: auto;"></div>
-        <input type="text" id="messageInput" placeholder="Type a message">
-        <button onclick="sendMessage()">Send</button>
-    </div>
+    <div id="container" style="display: flex; flex-direction: row;">
+        <div id="chartArea" style="width: 480px; height: 480px;"></div>
+        <div id="chatArea" style="width: 800px; height: 480px;">
+            <h2>WebSocket Chat</h2>
+            <div id="messages" style="width: 640px; height: 600px; overflow-y: auto;"></div>
+            <input type="text" id="messageInput" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
 
     <script src="static/app.js"></script>
 </body>

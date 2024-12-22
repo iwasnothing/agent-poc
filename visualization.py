@@ -7,8 +7,11 @@ from hashing import hash_query, decode_answer
 import pandas as pd
 import logging
 import declare_constants
+import sys
 logging.basicConfig(level=declare_constants.get_log_level())
 logger = logging.getLogger(__name__)
+handler = logging.StreamHandler(sys.stdout)
+logger.addHandler(handler)
 
 def create_buyer_graph(buyer_data: pd.DataFrame):
     G = nx.Graph()
@@ -35,14 +38,14 @@ def create_supplier_graph(supplier_data: pd.DataFrame):
     return G
 
 def visualize_graph(G: nx.Graph, filename: str):
-    net = Network(height='150px', width='100%',notebook=True)
+    net = Network(height='300px', width='300px',notebook=True)
     net.from_nx(G)
     net.show(filename)
 
 def create_bar_chart(data: pd.DataFrame, column_name: str, filename: str):
     # Force matplotlib to use the Agg backend
     plt.switch_backend('Agg')
-    
+    logger.debug(data)
     data["decoded_"+column_name] = data[column_name].apply(lambda x: decode_answer(x))
     logger.debug(data)
     

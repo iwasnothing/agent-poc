@@ -43,11 +43,15 @@ def decode_answer(answer: str) -> str:
     decoded_answer = []
     for token in tokens:
         original_token = token
+        token = token.replace("\'", "").replace("\"", "")
         if len(token) > 0:
+            logger.debug(f"token: {token}")
             if not token[0].isalnum():
                 token = token[1:]
-            if not token[-1].isalnum():
+            if len(token) > 0 and not token[-1].isalnum():
                 token = token[:-1]
+            
+            logger.debug(f"trimmed token: {token}")
         df = con.sql(f"select mg_id from {TABLE_NAMES['MG_HASH_MAP']} where hash = '{token}'").to_df()
         if len(df) > 0:
             logger.debug(f"df: {df}")

@@ -26,10 +26,12 @@ import json
 from user_authentication import authenticate_user, create_token
 from user import User
 import duckdb
-
+import sys
 dotenv.load_dotenv()
 logging.basicConfig(level=declare_constants.get_log_level())
 logger = logging.getLogger(__name__)
+handler = logging.StreamHandler(sys.stdout)
+logger.addHandler(handler)
 TABLE_NAMES = declare_constants.GET_TABLE_NAMES()
 
 app = FastAPI()
@@ -200,7 +202,7 @@ async def websocket_endpoint(websocket: WebSocket, token: str):
                                     decoded_result = decode_answer(prefix_chunk)
                             logger.debug(f"Data Analyzing Message generated: {decoded_result}")
                             await websocket.send_text(decoded_result + " ")
-                    await websocket.send_text(" " + last_word + "<br>")
+                    await websocket.send_text(" " + decode_answer(last_word) + "<br>")
                     await websocket.send_text("Any further questions? <br>")
                     data = await websocket.receive_text()
                     if len(data) > MAX_MESSAGE_SIZE:

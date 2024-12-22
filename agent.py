@@ -14,11 +14,14 @@ import logging
 import os
 from tools import ContextData
 import visualization
+import sys
+import declare_constants
 
 dotenv.load_dotenv()
-logging_level = os.getenv("LOGGING_LEVEL")
-logging.basicConfig(level=logging_level)
+logging.basicConfig(level=declare_constants.get_log_level())
 logger = logging.getLogger(__name__)
+handler = logging.StreamHandler(sys.stdout)
+logger.addHandler(handler)
 
 class ActionPlan(BaseModel):
     actions: List[str]
@@ -101,8 +104,8 @@ class DataCrew:
         while True:
             result = await self.data_retriever_agent.run(
                 f"""
-                Use the provided tools to retrieve the data in order to answer the question: {self.user_query} 
-                according to the action plan: {action_plan_str}
+                Use the provided tools to retrieve the data in order to answer the question: {self.user_query}.
+                Put the result of the tool execution as the agent result object.
                 """
                 , deps=self.con)
             for msg in result.all_messages():
@@ -127,16 +130,16 @@ class DataCrew:
             visualization.create_bar_chart(df, 'supplier', image_path)
             g = visualization.create_supplier_graph(df)
             visualization.visualize_graph(g,graph_path)
-            output_html += f"<div class='iframe-container'><img src='static/{self.session_id}_supplier_bar_chart.png' alt='Supplier Bar Chart' style='width:200px;height:200px;'></div>"
-            output_html += f"<div class='iframe-container'><iframe src='static/{self.session_id}_supplier_graph.html' style='width:150px;height:150px;'></iframe></div>"
+            output_html += f"<div class='iframe-container'><img src='static/{self.session_id}_supplier_bar_chart.png' alt='Supplier Bar Chart' style='width:400px;height:400px;'></div>"
+            output_html += f"<div class='iframe-container'><iframe src='static/{self.session_id}_supplier_graph.html' style='width:350px;height:250px;'></iframe></div>"
         elif result.source == "get_buyer_of_mg":
             image_path = f"static/{self.session_id}_buyer_bar_chart.png"
             graph_path = f"static/{self.session_id}_buyer_graph.html"
             visualization.create_bar_chart(df, 'buyer', image_path)
             g = visualization.create_buyer_graph(df)
             visualization.visualize_graph(g,graph_path)
-            output_html += f"<div class='iframe-container'><img src='static/{self.session_id}_buyer_bar_chart.png' alt='Buyer Bar Chart' style='width:300px;height:300px;'></div>"
-            output_html += f"<div class='iframe-container'><iframe src='static/{self.session_id}_buyer_graph.html' width='100%' height='150px' style='width:300px;height:300px;'></iframe></div>"
+            output_html += f"<div class='iframe-container'><img src='static/{self.session_id}_buyer_bar_chart.png' alt='Buyer Bar Chart' style='width:400px;height:400px;'></div>"
+            output_html += f"<div class='iframe-container'><iframe src='static/{self.session_id}_buyer_graph.html' width='100%' height='350px' style='width:300px;height:300px;'></iframe></div>"
         logger.debug(f"Visualization HTML: {output_html}")
         return output_html
     
