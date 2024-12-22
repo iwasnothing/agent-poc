@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat with Authentication</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div id="loginPopup">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+    <div id="container" style="display: flex; flex-direction: row;">
+        <div id="chartArea" style="width: 480px; height: 480px;"></div>
+        <div id="chatArea" style="width: 800px; height: 480px;">
+            <h2>WebSocket Chat</h2>
+            <div id="messages" style="width: 640px; height: 600px; overflow-y: auto;"></div>
+            <input type="text" id="messageInput" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+    <script src="static/app.js"></script>
+</body>
+</html>
